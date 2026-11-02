@@ -1,0 +1,38 @@
+# Dependencies and virtual environments
+node_modules/
+.venv/
+venv/
+
+# Build and compiler output
+dist/
+dist-electron/
+release/
+out/
+*.tsbuildinfo
+
+# Local runtime data and credentials
+*.sqlite
+*.sqlite-*
+*.db
+*.fit
+*.zip
+openrouter-key
+garmin-tokens/
+garmin-downloads/
+fit-files/
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+
+# Logs and operating-system files
+*.log
+.DS_Store
+
+# Editor state
+.idea/
+.vscode/
+*.swp

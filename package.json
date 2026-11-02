@@ -1,0 +1,66 @@
+{
+  "name": "running-log",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "dist-electron/electron/main.js",
+  "scripts": {
+    "dev": "concurrently -k \"vite\" \"npm:dev:electron\"",
+    "dev:electron": "tsc -p tsconfig.electron.json --watch --preserveWatchOutput & wait-on tcp:5174 file:dist-electron/electron/main.js && env -u ELECTRON_RUN_AS_NODE VITE_DEV_SERVER_URL=http://localhost:5174 electron .",
+    "build": "tsc -b && vite build && electron-builder",
+    "build:dir": "tsc -b && vite build && electron-builder --dir",
+    "test": "ELECTRON_RUN_AS_NODE=1 electron node_modules/tsx/dist/cli.mjs --test tests/*.test.ts",
+    "typecheck": "tsc -b --pretty false",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "better-sqlite3": "^12.4.1",
+    "date-fns": "^4.1.0",
+    "fit-file-parser": "^2.3.3",
+    "leaflet": "^1.9.4",
+    "lucide-react": "^0.548.0",
+    "openai": "^7.45.0",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-leaflet": "^5.0.0",
+    "recharts": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/leaflet": "^1.9.22",
+    "@types/node": "^24.8.1",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^5.0.4",
+    "concurrently": "^9.2.1",
+    "electron": "^38.3.0",
+    "electron-builder": "^26.0.12",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "wait-on": "^9.0.1"
+  },
+  "build": {
+    "appId": "com.runninglog.desktop",
+    "productName": "Running Log",
+    "files": [
+      "dist/**/*",
+      "dist-electron/**/*",
+      "electron/preload.cjs",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "python",
+        "to": "python"
+      }
+    ],
+    "asarUnpack": [
+      "node_modules/better-sqlite3/**/*",
+      "node_modules/fit-file-parser/**/*"
+    ],
+    "mac": {
+      "category": "public.app-category.healthcare-fitness"
+    }
+  }
+}
